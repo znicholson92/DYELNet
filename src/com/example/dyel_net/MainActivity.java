@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 		 
 		  @Override
 		  protected void onPostExecute(String result) {
-		   ListDrwaer();
+		   ListDrawer();
 		  }
 		 }// end async task
 		 
@@ -109,36 +109,39 @@ public class MainActivity extends Activity {
 		 }
 		 
 		 // build hash set for list view
-		 public void ListDrwaer() {
-		  List<Map<String, String>> employeeList = new ArrayList<Map<String, String>>();
-		 
+		 public void ListDrawer() {
+		  List<Map<String, String>> resultList = new ArrayList<Map<String, String>>();
+		 //{"data":[{"username":"testuser","firstname":"Stiff","lastname":"Rick","dateofbirth":"1990-01-01","sex":"m","location":null}]} 
 		  try {
 		   JSONObject jsonResponse = new JSONObject(jsonResult);
-		   JSONArray jsonMainNode = jsonResponse.optJSONArray("emp_info");
+		   JSONArray jsonMainNode = jsonResponse.optJSONArray("data");
 		 
 		   for (int i = 0; i < jsonMainNode.length(); i++) {
 		    JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-		    String name = jsonChildNode.optString("employee name");
-		    String number = jsonChildNode.optString("employee no");
-		    String outPut = name + "-" + number;
-		    employeeList.add(createEmployee("employees", outPut));
+		    String username = jsonChildNode.optString("username");
+		    String firstname = jsonChildNode.optString("firstname");
+		    String lastname = jsonChildNode.optString("lastname");
+		    String dob = jsonChildNode.optString("dateofbirth");
+		    String sex = jsonChildNode.optString("sex");
+		    String location = jsonChildNode.optString("location");
+		    resultList.add(createEmployee("employees", outPut));
 		   }
 		  } catch (JSONException e) {
 		   Toast.makeText(getApplicationContext(), "Error" + e.toString(),
 		     Toast.LENGTH_SHORT).show();
 		  }
 		 
-		  SimpleAdapter simpleAdapter = new SimpleAdapter(this, employeeList,
+		  SimpleAdapter simpleAdapter = new SimpleAdapter(this, resultList,
 		    android.R.layout.simple_list_item_1,
-		    new String[] { "employees" }, new int[] { android.R.id.text1 });
+		    new String[] { "results" }, new int[] { android.R.id.text1 });
 		  listView1.setAdapter(simpleAdapter);
 		  
 		 }
 		 
-		 private HashMap<String, String> createEmployee(String name, String number) {
-		  HashMap<String, String> employeeNameNo = new HashMap<String, String>();
-		  employeeNameNo.put(name, number);
-		  return employeeNameNo;
+		 private HashMap<String, String> createResult(String... params) {
+		  HashMap<String, String> resultMap = new HashMap<String, String>();
+		  resultMap.put(/*TODO*/);
+		  return resultMap;
 		 }
 	
 	
