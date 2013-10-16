@@ -124,7 +124,13 @@ public class MainActivity extends Activity {
 		    String dob = jsonChildNode.optString("dateofbirth");
 		    String sex = jsonChildNode.optString("sex");
 		    String location = jsonChildNode.optString("location");
-		    resultList.add(createEmployee("employees", outPut));
+		    
+		    resultList.add(createResult(username, "Username"));
+		    resultList.add(createResult(firstname, "First Name"));
+		    resultList.add(createResult(lastname, "Last Name"));
+		    resultList.add(createResult(dob, "Date of Birth"));
+		    resultList.add(createResult(sex, "sex"));
+		    resultList.add(createResult(location, "location"));
 		   }
 		  } catch (JSONException e) {
 		   Toast.makeText(getApplicationContext(), "Error" + e.toString(),
@@ -138,9 +144,9 @@ public class MainActivity extends Activity {
 		  
 		 }
 		 
-		 private HashMap<String, String> createResult(String... params) {
+		 private HashMap<String, String> createResult(String name, String data) {
 		  HashMap<String, String> resultMap = new HashMap<String, String>();
-		  resultMap.put(/*TODO*/);
+		  resultMap.put(name, data);
 		  return resultMap;
 		 }
 	
