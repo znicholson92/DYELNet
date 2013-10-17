@@ -24,4 +24,13 @@
         android:text="Connect"
         android:onClick="connectToDatabase" />
 
+    <GridView
+        android:id="@+id/gridView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:numColumns="3" >
+    </GridView>
+
 </RelativeLayout>
