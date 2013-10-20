@@ -40,14 +40,13 @@ import org.json.JSONObject;
 
 public class MainActivity extends Activity {
 	private String jsonResult;
-	private String url = "http://web.engr.illinois.edu/~dyel-net/get_stiff_rick.php";
-	private ListView listView1;
+	//private String url = "http://web.engr.illinois.edu/~dyel-net/get_stiff_rick.php";
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		listView1 = (ListView) findViewById(R.id.listView1);
 	}
 
 	@Override
@@ -59,38 +58,47 @@ public class MainActivity extends Activity {
 	
 	
 	public void connectToDatabase(View v)
-	{
-		//DYEL_NET con = new DYEL_NET();
+	{	
+		connection con = new connection("dyel-net_admin", "teamturtle");
 		
-		testDYEL con = new testDYEL();
-		
-		String result = con.Query();
+		String result = con.ReadQuery("select * from user");
 		Log.w("DEBUGGING PRINT", "point 3");
 		AlertDialog dialog = new AlertDialog.Builder(this).create();
 	    dialog.setTitle(result);
 	    dialog.show();
-	    //accessWebService();
-	    //ListDrawer();
 	}
 	
-	private class testDYEL
+	private class connection
 	{
-		public String Query()
+		private String username;
+		private String password;
+		
+		public connection(String un, String pw)
 		{
-			String url = "http://web.engr.illinois.edu/~dyel-net/readquery.php?user=dyel-net_admin&pw=teamturtle&sql=select * from user";
-		    
-			Log.w("DEBUGGING PRINT", "point 1");
+			username = un;
+			password = pw;
+		}
+		
+		public String ReadQuery(String SQL)
+		{
+			//String url = "http://web.engr.illinois.edu/~dyel-net/readquery.php?user=" + username + "&pw=" + password + "&sql=" + SQL;
+		    String host = "http://web.engr.illinois.edu/~dyel-net/readquery.php?";
+			String params = "user=" + username + "&pw=" + password + "&sql=" + SQL;
+			
 	        DefaultHttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost(url);
-	        Log.w("DEBUGGING PRINT", "point 2");
+	        
 	        try
 	        {
-            HttpHost targetHost = new HttpHost("http://web.engr.illinois.edu/~dyel-net/");
-            HttpGet targetGet = new HttpGet("readquery.php?user=dyel-net_admin&pw=teamturtle&sql=select * from user");
-            HttpResponse response = httpclient.execute(targetHost, targetGet);
+            Log.w("DEBUGGING PRINT", "point 1");
+            HttpPost post = new HttpPost(host+params);
+            HttpGet get = new HttpGet(host+params);
+            Log.w("DEBUGGING PRINT", "point 2");
+            HttpResponse response = httpclient.execute(get);
+            Log.w("DEBUGGING PRINT", "point 3");
             HttpEntity entity = response.getEntity();
+            Log.w("DEBUGGING PRINT", "point 4");
             String htmlResponse = EntityUtils.toString(entity);
-          
+            Log.w("DEBUGGING PRINT", "point 5");
     	    return htmlResponse;
     	    
 	        } catch (ClientProtocolException e) {
@@ -102,6 +110,28 @@ public class MainActivity extends Activity {
 			}
 	        
 	        return "ERROR";
+		}
+		
+		public void WriteQuery(String SQL)
+		{
+			 	String params = "user=" + username + "&pw=" + password + "&sql=" + SQL;
+				
+				
+		        DefaultHttpClient httpclient = new DefaultHttpClient();
+		        
+		        try
+		        {
+	            HttpHost targetHost = new HttpHost("http://web.engr.illinois.edu/~dyel-net/writequery.php?");
+	            HttpGet targetGet = new HttpGet(params);
+	            httpclient.execute(targetHost, targetGet);
+	            
+		        } catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		
 	}
