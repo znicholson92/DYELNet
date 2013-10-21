@@ -25,9 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
  
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.*;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.client.*;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -89,13 +91,27 @@ public class MainActivity extends Activity {
 	        
 	        try
 	        {
-            Log.w("DEBUGGING PRINT", "point 1");
-            HttpPost post = new HttpPost(host+params);
-            HttpGet get = new HttpGet(host+params);
-            Log.w("DEBUGGING PRINT", "point 2");
-            HttpResponse response = httpclient.execute(get);
-            Log.w("DEBUGGING PRINT", "point 3");
-            HttpEntity entity = response.getEntity();
+            //Log.w("DEBUGGING PRINT", "point 1");
+            //HttpPost post = new HttpPost(host+params);
+            //HttpGet get = new HttpGet(host+params);
+            //Log.w("DEBUGGING PRINT", "point 2");
+            //HttpResponse response = httpclient.execute(get);
+            //Log.w("DEBUGGING PRINT", "point 3");
+            
+    	    
+    	    HttpPost httpPost = new HttpPost("host");
+    	    Log.w("DEBUGGING PRINT", "point 1");
+    	    List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+    	    nvps.add(new BasicNameValuePair("user", username));
+    	    nvps.add(new BasicNameValuePair("pw", password));
+    	    nvps.add(new BasicNameValuePair("sql", SQL));
+    	    httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+    	    Log.w("DEBUGGING PRINT", "point 2");
+    	    
+    	    Log.w("DEBUGGING PRINT", host+params);
+    	    HttpResponse response = httpclient.execute(httpPost);
+    	    Log.w("DEBUGGING PRINT", "point 3");
+    	    HttpEntity entity = response.getEntity();
             Log.w("DEBUGGING PRINT", "point 4");
             String htmlResponse = EntityUtils.toString(entity);
             Log.w("DEBUGGING PRINT", "point 5");
