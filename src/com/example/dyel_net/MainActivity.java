@@ -65,9 +65,7 @@ public class MainActivity extends Activity {
 	public void connectToDatabase(View v)
 	{	
 		connection con = new connection("dyel-net_admin", "teamturtle");
-		
-        con.execute("select * from user");
-        
+        con.execute("read", "select * from user");
 	}
 	
 	private class connection extends AsyncTask<String, Void, Boolean>
@@ -85,66 +83,82 @@ public class MainActivity extends Activity {
 		{
 			        String result = "default";
 					
-					try {
-						result = ReadQuery(params[0]);
-					} catch (ClientProtocolException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			        if(params[0] == "read")
+			        {
+		        		result = ReadQuery(params[1]);
+			        }
+			        else if(params[0] == "write")
+			        {
+			        	WriteQuery(params[1]);
+			        }
 			            	
 			        Log.w("ASYNC", result);
 			        
 			        return true; 
 		}
 		
-		public String ReadQuery(String SQL) throws ClientProtocolException, IOException
+		public String ReadQuery(String SQL)
 		{
-			String host = "http://web.engr.illinois.edu/~dyel-net/readquery.php";
-			List<BasicNameValuePair> nvps = null;
-	        HttpParams httpParameters = new BasicHttpParams();
+			try {
+				String host = "http://web.engr.illinois.edu/~dyel-net/readquery.php";
+				List<BasicNameValuePair> nvps = null;
+	        	HttpParams httpParameters = new BasicHttpParams();
 	        
-	        int timeoutConnection = 20000;
-	        HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-	        int timeoutSocket = 20000;
-	        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	        	int timeoutConnection = 20000;
+	        	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	        	int timeoutSocket = 20000;
+	        	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
-	        HttpClient httpclient = new DefaultHttpClient(httpParameters);
-	        HttpPost httpPost = new HttpPost(host);
-	        HttpResponse response;
-	        nvps = new ArrayList<BasicNameValuePair>();  
-	        nvps.add(new BasicNameValuePair("user", username ));
-	        nvps.add(new BasicNameValuePair("pw", password ));
-	        nvps.add(new BasicNameValuePair("sql", SQL));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-	        response = httpclient.execute(httpPost);
-	        String htmlresponse = EntityUtils.toString(response.getEntity());
+	        	HttpClient httpclient = new DefaultHttpClient(httpParameters);
+	        	HttpPost httpPost = new HttpPost(host);
+	        	HttpResponse response;
+	        	nvps = new ArrayList<BasicNameValuePair>();  
+	        	nvps.add(new BasicNameValuePair("user", username ));
+	        	nvps.add(new BasicNameValuePair("pw", password ));
+	        	nvps.add(new BasicNameValuePair("sql", SQL));
+	        	httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+	        	response = httpclient.execute(httpPost);
+	        	String htmlresponse;
+				htmlresponse = EntityUtils.toString(response.getEntity());
+				return htmlresponse;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-	        return htmlresponse;
+	        return "ERROR";
 	        
 		}
 		
-		public void WriteQuery(String SQL) throws ClientProtocolException, IOException
+		public void WriteQuery(String SQL)
 		{		        
+			try {
+				String host = "http://web.engr.illinois.edu/~dyel-net/writequery.php";
+				List<BasicNameValuePair> nvps = null;
+				HttpParams httpParameters = new BasicHttpParams();
+				int timeoutConnection = 20000;
+				HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+				int timeoutSocket = 20000;
+				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
-		        String host = "http://web.engr.illinois.edu/~dyel-net/writequery.php";
-		       	List<BasicNameValuePair> nvps = null;
-		       	HttpParams httpParameters = new BasicHttpParams();
-		       	int timeoutConnection = 20000;
-		       	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-		       	int timeoutSocket = 20000;
-		       	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-
-		       	HttpClient httpclient = new DefaultHttpClient(httpParameters);
-		       	HttpPost httpPost = new HttpPost(host);
-	        	nvps = new ArrayList<BasicNameValuePair>();  
-	        	nvps.add(new BasicNameValuePair("user", username ));
-		        nvps.add(new BasicNameValuePair("pw", password ));
-		       	nvps.add(new BasicNameValuePair("sql", SQL));
-		       	httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-		       	httpclient.execute(httpPost);
+				HttpClient httpclient = new DefaultHttpClient(httpParameters);
+				HttpPost httpPost = new HttpPost(host);
+				nvps = new ArrayList<BasicNameValuePair>();  
+				nvps.add(new BasicNameValuePair("user", username ));
+				nvps.add(new BasicNameValuePair("pw", password ));
+				nvps.add(new BasicNameValuePair("sql", SQL));
+				httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+				httpclient.execute(httpPost);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		      
 		}
 		
