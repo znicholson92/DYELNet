@@ -13,93 +13,127 @@
 
 	<!--  Header -->
     <LinearLayout
-        android:id="@+id/header"
+        android:id="@+id/footer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:orientation = "horizontal"
         android:background="#1483D9">
+
+
         <TextView android:id="@+id/status_bar"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_width="fill_parent"
+            android:layout_marginRight="4dip"
+        	android:layout_marginLeft="4dip"
             android:text="hello"
             android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+        />
+        <TextView android:id="@+id/username"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginRight="4dip"
+        	android:layout_marginLeft="4dip"
+            android:text=""
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
         />
     </LinearLayout>
     
-    <!-- Column Header -->
-    <LinearLayout android:id="@+id/col_header"
-        android:background="#10A3A3"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        >
-        <TextView android:id="@+id/col1"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="col1"
-            android:gravity="center"
-            android:width="65dip"
-            android:height="20dip"
-        />
-        <TextView android:id="@+id/col2"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="col2"
-            android:gravity="center"
-            android:width="65dip"
-            android:height="20dip"
-        />
-        <TextView android:id="@+id/col3"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="col_3"
-            android:gravity="center"
-            android:width="65dip"
-            android:height="20dip"
-        />
-        <TextView android:id="@+id/col4"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="col_4"
-            android:gravity="center"
-            android:width="65dip"
-            android:height="20dip"
-        />
-        <TextView android:id="@+id/col5"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="col5"
-            android:gravity="center"
-            android:width="65dip"
-            android:height="20dip"
-        />
-    </LinearLayout>
- 
-    <!-- List Divider -->
-    <View android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="?android:attr/listDivider" />
+    
+    <HorizontalScrollView
+            android:id="@+id/horizontalScrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="wrap_content"
-        android:layout_height="392dp"
-        android:layout_above="@+id/button_connect"
-        android:layout_alignRight="@+id/header"
-        android:layout_below="@+id/header"
-        android:orientation="horizontal" >
+	    <LinearLayout
+	        android:id="@+id/linear_scroll"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:orientation="vertical" >
+	
+		    <!-- Column Header -->
 
-    </ListView>
+		    <LinearLayout
+		        android:id="@+id/col_header"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#10A3A3" >
+
+		        <TextView android:id="@+id/col1"
+		            android:layout_height="fill_parent"
+		            android:layout_width="wrap_content"
+		            android:text="col1"
+		            android:gravity="center"
+		            android:width="65dip"
+		            android:height="20dip"
+		        />
+		        <TextView android:id="@+id/col2"
+		            android:layout_height="fill_parent"
+		            android:layout_width="wrap_content"
+		            android:text="col2"
+		            android:gravity="center"
+		            android:width="65dip"
+		            android:height="20dip"
+		        />
+		        <TextView android:id="@+id/col3"
+		            android:layout_height="fill_parent"
+		            android:layout_width="wrap_content"
+		            android:text="col_3"
+		            android:gravity="center"
+		            android:width="65dip"
+		            android:height="20dip"
+		        />
+		        <TextView android:id="@+id/col4"
+		            android:layout_height="fill_parent"
+		            android:layout_width="wrap_content"
+		            android:text="col_4"
+		            android:gravity="center"
+		            android:width="65dip"
+		            android:height="20dip"
+		        />
+		        <TextView android:id="@+id/col5"
+		            android:layout_height="fill_parent"
+		            android:layout_width="wrap_content"
+		            android:text="col5"
+		            android:gravity="center"
+		            android:width="65dip"
+		            android:height="20dip"
+		        />
+		    </LinearLayout>
+		 
+		    <!-- List Divider -->
+		    <View android:layout_width="fill_parent"
+		        android:layout_height="1dip"
+		        android:background="?android:attr/listDivider" />
+		
+		    <ListView
+		        android:id="@+id/listView1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="392dp"
+		        android:layout_above="@+id/button_connect"
+		        android:layout_alignRight="@+id/footer"
+		        android:layout_below="@+id/footer"
+		        android:orientation="horizontal" >
+		
+		    </ListView>
+	    </LinearLayout>
+    </HorizontalScrollView>
 
     <!-- Footer -->
 
     <LinearLayout
-        android:id="@+id/header"
+        android:id="@+id/footer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#1483D9" 
-        android:paddingBottom="5dip"
-   	 	android:paddingLeft="2dip"
-    	android:paddingRight="2dip"
-    	android:paddingTop="5dip">
+        android:background="#1483D9"
+        android:paddingBottom="2dip"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+        android:paddingTop="2dip" >
 
     	<Button
     	    android:id="@+id/button_connect"

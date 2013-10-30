@@ -165,20 +165,19 @@ public class connection
                         String key = iter.next();
                         String value = (String)j.get(key);
                         map.put(key, value);
+                        Log.w(key, value);
                         Columns[col].setText(key);
                         col++;
                     }
                 	tableList.add(map);
             	}
-            	Log.w("1", "3");
             	if(isSet)
             	{   
-            		Log.w("1", "Initializing adapter");
             		SimpleAdapter myAdapter = 
             				new SimpleAdapter(app, 
             								  tableList, 
             								  R.layout.my_list_item,
-            								  new String[] {(String) Col1.getText(), (String) Col1.getText(),(String) Col1.getText() ,(String) Col1.getText(), (String) Col1.getText()}, 
+            								  new String[] {(String) Col1.getText(), (String) Col2.getText(),(String) Col3.getText() ,(String) Col4.getText(), (String) Col5.getText()}, 
             								  new int[] {R.id.cell1, R.id.cell2, R.id.cell3, R.id.cell4, R.id.cell5});
 
             		list.setAdapter(myAdapter);	
@@ -193,8 +192,8 @@ public class connection
     	}
 	
 		private String ReadQuery(String SQL)
-	{
-		try {
+		{
+			try {
 			String host = "http://web.engr.illinois.edu/~dyel-net/readquery.php";
 			List<BasicNameValuePair> nvps = null;
         	HttpParams httpParameters = new BasicHttpParams();
@@ -203,7 +202,7 @@ public class connection
         	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
         	int timeoutSocket = 20000;
         	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-Log.w("1", "1");
+
         	HttpClient httpclient = new DefaultHttpClient(httpParameters);
         	HttpPost httpPost = new HttpPost(host);
         	HttpResponse response;
@@ -214,19 +213,19 @@ Log.w("1", "1");
         	httpPost.setEntity(new UrlEncodedFormEntity(nvps));
         	response = httpclient.execute(httpPost);
         	String htmlresponse;
-			htmlresponse = EntityUtils.toString(response.getEntity()); Log.w("1", "2");
+			htmlresponse = EntityUtils.toString(response.getEntity());
 			return htmlresponse;
-		} catch (ParseException e) {
+			} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
-        return "ERROR";
+        	return "ERROR";
         
-	}
+		}
 	
 		private Boolean WriteQuery(String SQL)
 		{		        

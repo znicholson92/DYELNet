@@ -73,21 +73,38 @@ public class MainActivity extends Activity {
 		
 		if(con.loggedin)
 		{
-			setContentView(R.layout.activity_main);
+			setContentView(R.layout.main_menu);
+			TextView username_bar = (TextView) findViewById(R.id.username);
+			username_bar.setText(un_box.getText().toString());
+			
 		}
 		else
 		{	
 			AlertDialog dialog = new AlertDialog.Builder(this).create();
             dialog.setTitle("Invalid Login");
             dialog.show();
-			un_box.setText("");
-			pw_box.setText("");
 		}
+		un_box.setText("");
+		pw_box.setText("");
 	}
 	
-	public void gotToMenu(View v)
+	public void logout(View v)
+	{
+		con.logout();
+		TextView username_bar = (TextView) findViewById(R.id.usernameText);
+		username_bar.setText("");
+		setContentView(R.layout.login);
+	}
+	
+	public void gotoMenu(View v)
 	{
 		setContentView(R.layout.main_menu);
+	}
+	
+	public void gotoTestApp(View v)
+	{
+		Log.w("1", "got here");
+		setContentView(R.layout.activity_main);
 	}
 	
 	public void connectToDatabase(View v)
@@ -100,3 +117,4 @@ public class MainActivity extends Activity {
 	}
 	
 }
+
