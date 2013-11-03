@@ -116,5 +116,53 @@ public class MainActivity extends Activity {
         
 	}
 	
+	//Suna Added for create user
+	public void gotoRegister(View v)
+	{
+		Log.w("1", "go to createuser.xml page");
+		setContentView(R.layout.createuser);
+	}
+	public void CreateUser(View view){
+		String username;
+		String password;
+		String firstName;
+		String lastName;
+		String DOB;
+		String sex;
+		//String location;
+		String Query;
+		
+		EditText userNameET = (EditText) findViewById(R.id.edit_username);
+		EditText passwordET = (EditText) findViewById(R.id.edit_password);		
+		EditText firstNameET = (EditText) findViewById(R.id.edit_firstName);
+		EditText lastNameET = (EditText) findViewById(R.id.edit_lastName);
+		EditText dateOfBirthET = (EditText) findViewById(R.id.edit_dateOfBirth);
+		EditText sexET = (EditText) findViewById(R.id.edit_sex);
+		//EditText locationET = (EditText) findViewById(R.id.edit_location);
+
+		username = userNameET.getText().toString();
+		password = passwordET.getText().toString();
+		firstName = firstNameET.getText().toString();
+		lastName = lastNameET.getText().toString();
+		DOB = dateOfBirthET.getText().toString();
+		sex = sexET.getText().toString();
+		//location = locationET.getText().toString();
+		
+		Query = "INSERT INTO  `dyel-net_main`.`user` "
+				+"(`username` , `password`, `firstname` , `lastname` , `dateofbirth` , `sex`)"
+				+"VALUES ( "
+				+"'"+username+"', "
+				+"'"+password+"', "
+				+"'"+firstName+"', "
+				+"'"+lastName+"', "
+				+"'"+DOB+"', "
+				+"'"+sex+"');";
+		connection con = new connection("dyel-net_admin", "teamturtle", this);
+		con.writeQuery(Query);
+		////writeQuery -> boolean
+		Log.w("1", "user info created");
+		setContentView(R.layout.login);
+	 }
+	
 }
 

@@ -66,7 +66,7 @@ public class connection
 			working = false;
 		}
 	}
-	
+
 	public void readQuery(String SQL, ListView l)
 	{
 		_connection task = new _connection();
